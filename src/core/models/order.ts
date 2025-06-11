@@ -9,6 +9,7 @@ export enum OrderStatus {
 export interface IOrder extends Document {
   customerID: Types.ObjectId;
   amount: number;
+  seatIDs: Types.ObjectId[];
   currency: string;
   status: OrderStatus;
 }
@@ -16,6 +17,7 @@ export interface IOrder extends Document {
 const orderSchema = new Schema<IOrder>({
   customerID: { type: Schema.Types.ObjectId, required: true },
   amount: { type: Number, required: true },
+  seatIDs: [{ type: Schema.Types.ObjectId, ref: 'Seat', required: true }],
   currency: { type: String, default: '$' },
   status: {
     type: String,
