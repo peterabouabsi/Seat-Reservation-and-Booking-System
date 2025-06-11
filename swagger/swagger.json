@@ -1,0 +1,373 @@
+{
+	"openapi": "3.0.0",
+	"components": {
+		"examples": {},
+		"headers": {},
+		"parameters": {},
+		"requestBodies": {},
+		"responses": {},
+		"schemas": {
+			"HttpResponse": {
+				"properties": {
+					"data": {},
+					"message": {
+						"type": "string"
+					},
+					"status": {
+						"type": "number",
+						"format": "double"
+					},
+					"error": {
+						"type": "boolean"
+					}
+				},
+				"required": [
+					"message",
+					"status",
+					"error"
+				],
+				"type": "object"
+			},
+			"OrderPaymentDto": {
+				"properties": {
+					"customerId": {
+						"type": "string"
+					},
+					"orderId": {
+						"type": "string"
+					}
+				},
+				"required": [
+					"customerId",
+					"orderId"
+				],
+				"type": "object"
+			},
+			"Pick_IEvent._id-or-name_": {
+				"properties": {
+					"_id": {
+						"description": "This documents _id."
+					},
+					"name": {
+						"type": "string"
+					}
+				},
+				"required": [
+					"_id",
+					"name"
+				],
+				"type": "object",
+				"description": "From T, pick a set of properties whose keys are in the union K"
+			},
+			"SelectEventDto": {
+				"$ref": "#/components/schemas/Pick_IEvent._id-or-name_"
+			},
+			"HttpResponse_SelectEventDto-Array_": {
+				"properties": {
+					"data": {
+						"items": {
+							"$ref": "#/components/schemas/SelectEventDto"
+						},
+						"type": "array"
+					},
+					"message": {
+						"type": "string"
+					},
+					"status": {
+						"type": "number",
+						"format": "double"
+					},
+					"error": {
+						"type": "boolean"
+					}
+				},
+				"required": [
+					"message",
+					"status",
+					"error"
+				],
+				"type": "object"
+			},
+			"mongoose.Types.ObjectId": {
+				"type": "string"
+			},
+			"Pick_ISeat._id-or-eventID-or-name-or-isTaken_": {
+				"properties": {
+					"_id": {
+						"description": "This documents _id."
+					},
+					"name": {
+						"type": "string"
+					},
+					"eventID": {
+						"$ref": "#/components/schemas/mongoose.Types.ObjectId"
+					},
+					"isTaken": {
+						"type": "boolean"
+					}
+				},
+				"required": [
+					"_id",
+					"name",
+					"eventID",
+					"isTaken"
+				],
+				"type": "object",
+				"description": "From T, pick a set of properties whose keys are in the union K"
+			},
+			"SelectSeatDto": {
+				"$ref": "#/components/schemas/Pick_ISeat._id-or-eventID-or-name-or-isTaken_"
+			},
+			"HttpResponse_SelectSeatDto-Array_": {
+				"properties": {
+					"data": {
+						"items": {
+							"$ref": "#/components/schemas/SelectSeatDto"
+						},
+						"type": "array"
+					},
+					"message": {
+						"type": "string"
+					},
+					"status": {
+						"type": "number",
+						"format": "double"
+					},
+					"error": {
+						"type": "boolean"
+					}
+				},
+				"required": [
+					"message",
+					"status",
+					"error"
+				],
+				"type": "object"
+			},
+			"ReserveSeatsDto": {
+				"properties": {
+					"seatIds": {
+						"items": {
+							"type": "string"
+						},
+						"type": "array"
+					},
+					"customerId": {
+						"type": "string"
+					}
+				},
+				"required": [
+					"seatIds",
+					"customerId"
+				],
+				"type": "object"
+			},
+			"Pick_ReserveSeatsDto.customerId-or-seatIds_": {
+				"properties": {
+					"customerId": {
+						"type": "string"
+					},
+					"seatIds": {
+						"items": {
+							"type": "string"
+						},
+						"type": "array"
+					}
+				},
+				"required": [
+					"customerId",
+					"seatIds"
+				],
+				"type": "object",
+				"description": "From T, pick a set of properties whose keys are in the union K"
+			},
+			"ConfirmBookingDto": {
+				"$ref": "#/components/schemas/Pick_ReserveSeatsDto.customerId-or-seatIds_"
+			}
+		},
+		"securitySchemes": {}
+	},
+	"info": {
+		"title": "booking_system",
+		"version": "1.0.0",
+		"description": "Seat Booking System",
+		"license": {
+			"name": "ISC"
+		},
+		"contact": {}
+	},
+	"paths": {
+		"/api/orders/pay": {
+			"post": {
+				"operationId": "ConfirmBooking",
+				"responses": {
+					"200": {
+						"description": "Success",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/HttpResponse"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Orders"
+				],
+				"security": [],
+				"parameters": [],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/OrderPaymentDto"
+							}
+						}
+					}
+				}
+			}
+		},
+		"/api/events": {
+			"get": {
+				"operationId": "SelectEvents",
+				"responses": {
+					"200": {
+						"description": "Success",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/HttpResponse_SelectEventDto-Array_"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Events"
+				],
+				"security": [],
+				"parameters": []
+			}
+		},
+		"/api/events/{eventId}/seats": {
+			"get": {
+				"operationId": "SelectSeats",
+				"responses": {
+					"200": {
+						"description": "Success",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/HttpResponse_SelectSeatDto-Array_"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Events"
+				],
+				"security": [],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "eventId",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				]
+			}
+		},
+		"/api/events/{eventId}/seats/reserve": {
+			"post": {
+				"operationId": "ReserveSeats",
+				"responses": {
+					"202": {
+						"description": "Success",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/HttpResponse"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Events"
+				],
+				"security": [],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "eventId",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/ReserveSeatsDto"
+							}
+						}
+					}
+				}
+			}
+		},
+		"/api/events/{eventId}/seats/confirm": {
+			"post": {
+				"operationId": "ConfirmBooking",
+				"responses": {
+					"200": {
+						"description": "Success",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/HttpResponse"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Events"
+				],
+				"security": [],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "eventId",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/ConfirmBookingDto"
+							}
+						}
+					}
+				}
+			}
+		}
+	},
+	"servers": [
+		{
+			"url": "/"
+		}
+	]
+}

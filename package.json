@@ -1,0 +1,42 @@
+{
+  "name": "booking_system",
+  "version": "1.0.0",
+  "description": "Seat Booking System",
+  "main": "src/server.ts",
+  "scripts": {
+    "cp:env:dist": "cp .env dist",
+    "tsoa": "tsoa routes && tsoa spec",
+    "build": "npm run tsoa && tsc && npm run cp:env:dist",
+    "start": "npm run tsoa && nodemon"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "dependencies": {
+    "cookie-parser": "^1.4.7",
+    "cors": "^2.8.5",
+    "dotenv": "^16.5.0",
+    "express": "^5.1.0",
+    "helmet": "^8.1.0",
+    "inversify": "^7.5.1",
+    "joi": "^17.13.3",
+    "mongoose": "^8.15.1",
+    "reflect-metadata": "^0.2.2",
+    "swagger-ui-express": "^5.0.1",
+    "tsoa": "^6.6.0",
+    "winston": "^3.17.0"
+  },
+  "devDependencies": {
+    "@types/cookie-parser": "^1.4.8",
+    "@types/cors": "^2.8.17",
+    "@types/express": "^5.0.1",
+    "@types/helmet": "^0.0.48",
+    "@types/mongoose": "^5.11.96",
+    "@types/node": "^22.14.1",
+    "@types/swagger-ui-express": "^4.1.8",
+    "nodemon": "^3.1.9",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.8.3"
+  }
+}
