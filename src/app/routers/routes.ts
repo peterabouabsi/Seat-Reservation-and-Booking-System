@@ -23,7 +23,7 @@ const models: TsoaRoute.Models = {
     // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
     "OrderPaymentDto": {
         "dataType": "refAlias",
-        "type": {"dataType":"nestedObjectLiteral","nestedProperties":{"customerId":{"dataType":"string","required":true},"orderId":{"dataType":"string","required":true}},"validators":{}},
+        "type": {"dataType":"nestedObjectLiteral","nestedProperties":{"customerId":{"dataType":"string","required":true}},"validators":{}},
     },
     // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
     "Pick_IEvent._id-or-name_": {
@@ -94,9 +94,10 @@ export function RegisterRoutes(app: Router) {
 
     
         const argsOrderController_confirmBooking: Record<string, TsoaRoute.ParameterSchema> = {
+                orderId: {"in":"path","name":"orderId","required":true,"dataType":"string"},
                 orderPayment: {"in":"body","name":"orderPayment","required":true,"ref":"OrderPaymentDto"},
         };
-        app.post('/api/orders/pay',
+        app.post('/api/orders/:orderId/pay',
             ...(fetchMiddlewares<RequestHandler>(OrderController)),
             ...(fetchMiddlewares<RequestHandler>(OrderController.prototype.confirmBooking)),
 

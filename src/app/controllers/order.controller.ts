@@ -23,7 +23,14 @@ export class OrderController extends Controller {
     super();
   }
 
-  // Set the reservation order as paid
+  /**
+   * Mark a reservation order as paid.
+   * This endpoint is called after successful payment to update the order status to "Paid".
+   *
+   * @param orderId The ID of the order being paid
+   * @param orderPayment Payment details including customerId (for testing purposes only)
+   * @returns A success response indicating the order has been paid
+   */
   @Middlewares(...orderPaymentMiddlewares)
   @SuccessResponse(200, 'Success')
   @Post(`/:orderId/pay`)

@@ -32,14 +32,10 @@
 				"properties": {
 					"customerId": {
 						"type": "string"
-					},
-					"orderId": {
-						"type": "string"
 					}
 				},
 				"required": [
-					"customerId",
-					"orderId"
+					"customerId"
 				],
 				"type": "object"
 			},
@@ -197,7 +193,7 @@
 		"contact": {}
 	},
 	"paths": {
-		"/api/orders/pay": {
+		"/api/orders/{orderId}/pay": {
 			"post": {
 				"operationId": "ConfirmBooking",
 				"responses": {
@@ -212,17 +208,30 @@
 						}
 					}
 				},
+				"description": "Mark a reservation order as paid.\r\nThis endpoint is called after successful payment to update the order status to \"Paid\".",
 				"tags": [
 					"Orders"
 				],
 				"security": [],
-				"parameters": [],
+				"parameters": [
+					{
+						"description": "The ID of the order being paid",
+						"in": "path",
+						"name": "orderId",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
 				"requestBody": {
+					"description": "Payment details including customerId (for testing purposes only)",
 					"required": true,
 					"content": {
 						"application/json": {
 							"schema": {
-								"$ref": "#/components/schemas/OrderPaymentDto"
+								"$ref": "#/components/schemas/OrderPaymentDto",
+								"description": "Payment details including customerId (for testing purposes only)"
 							}
 						}
 					}
@@ -244,6 +253,7 @@
 						}
 					}
 				},
+				"description": "Fetch all available events.\r\nThis endpoint returns a list of all events that users can view and book tickets for.",
 				"tags": [
 					"Events"
 				],
@@ -266,12 +276,14 @@
 						}
 					}
 				},
+				"description": "Get seat availability for an event.\r\nThis endpoint returns all seats for a specific event, including availability.",
 				"tags": [
 					"Events"
 				],
 				"security": [],
 				"parameters": [
 					{
+						"description": "The ID of the event",
 						"in": "path",
 						"name": "eventId",
 						"required": true,
@@ -297,12 +309,14 @@
 						}
 					}
 				},
+				"description": "Reserve selected seats for an event.\r\nTemporarily locks the specified seats to prevent other users from booking them before payment.",
 				"tags": [
 					"Events"
 				],
 				"security": [],
 				"parameters": [
 					{
+						"description": "The ID of the event",
 						"in": "path",
 						"name": "eventId",
 						"required": true,
@@ -312,11 +326,13 @@
 					}
 				],
 				"requestBody": {
+					"description": "An object containing seat IDs and customer ID",
 					"required": true,
 					"content": {
 						"application/json": {
 							"schema": {
-								"$ref": "#/components/schemas/ReserveSeatsDto"
+								"$ref": "#/components/schemas/ReserveSeatsDto",
+								"description": "An object containing seat IDs and customer ID"
 							}
 						}
 					}
@@ -338,12 +354,14 @@
 						}
 					}
 				},
+				"description": "Confirm the booking after payment.\r\nMarks the reserved seats as officially booked and removes any temporary locks.",
 				"tags": [
 					"Events"
 				],
 				"security": [],
 				"parameters": [
 					{
+						"description": "The ID of the event",
 						"in": "path",
 						"name": "eventId",
 						"required": true,
@@ -353,11 +371,13 @@
 					}
 				],
 				"requestBody": {
+					"description": "Object containing seat IDs and order info",
 					"required": true,
 					"content": {
 						"application/json": {
 							"schema": {
-								"$ref": "#/components/schemas/ConfirmBookingDto"
+								"$ref": "#/components/schemas/ConfirmBookingDto",
+								"description": "Object containing seat IDs and order info"
 							}
 						}
 					}
